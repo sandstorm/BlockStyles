@@ -1,0 +1,7 @@
+'Neos.NodeTypes:TextMixin':
+  properties:
+    text:
+      ui:
+        aloha:
+          'format':
+            'Sandstorm.Blockstyles': true

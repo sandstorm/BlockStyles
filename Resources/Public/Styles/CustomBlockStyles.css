@@ -1,0 +1,21 @@
+.size-small {
+    font-size: 70%;
+}
+.size-medium {
+    font-size: 100%;
+}
+.size-large {
+    font-size: 130%;
+}
+
+.padding-small {
+    padding: 0px;
+}
+
+.padding-medium {
+    padding: 10px;
+}
+
+.padding-large {
+    padding: 20px;
+}

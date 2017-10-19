@@ -1,0 +1,10 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        javascript:
+          'Sandstorm.BlockStyles:BlockStyles':
+            resource: resource://Sandstorm.BlockStyles/Public/BlockStyles/Plugin.js
+    fusion:
+      autoInclude:
+        Sandstorm.BlockStyles: true
