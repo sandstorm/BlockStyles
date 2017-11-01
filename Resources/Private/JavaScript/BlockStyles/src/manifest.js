@@ -5,7 +5,9 @@ import styleDefinitions, {extractAllCssClassNames, findAllAppliedClassesExceptFo
 
 const cssClassnamesInStyleDefinitions = extractAllCssClassNames(styleDefinitions);
 
-manifest('Sandstorm.BlockStyles', {}, globalRegistry => {
+manifest('Sandstorm.BlockStyles', {}, (globalRegistry, {frontendConfiguration}) => {
+	const stylePresets = frontendConfiguration['Sandstorm.BlockStyles:presets'];
+
 	const richtextToolbar = globalRegistry.get('ckEditor').get('richtextToolbar');
 	richtextToolbar.set('BlockStyles', {
 		component: BlockStyles,

@@ -1,6 +1,8 @@
 Neos:
   Neos:
     Ui:
+      frontendConfiguration:
+        'Sandstorm.BlockStyles:presets': "${Configuration.setting('Sandstorm.BlockStyles.presets')}"
       resources:
         javascript:
           'Sandstorm.BlockStyles:BlockStyles':
@@ -8,3 +10,25 @@ Neos:
     fusion:
       autoInclude:
         Sandstorm.BlockStyles: true
+Sandstorm:
+  BlockStyles:
+    presets:
+      full:
+        size:
+          label: 'Size'
+          options:
+            'size-small':
+              label: 'Small'
+            'size-medium':
+              label: 'Medium'
+            'size-large':
+              label: 'Large'
+        padding:
+          label: 'Padding'
+          options:
+            'padding-small':
+              label: 'Small'
+            'padding-medium':
+              label: 'Medium'
+            'padding-large':
+              label: 'Large'

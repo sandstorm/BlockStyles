@@ -62,7 +62,7 @@
 	
 	var _BlockStyles2 = _interopRequireDefault(_BlockStyles);
 	
-	var _styleDefinitions = __webpack_require__(11);
+	var _styleDefinitions = __webpack_require__(14);
 	
 	var _styleDefinitions2 = _interopRequireDefault(_styleDefinitions);
 	
@@ -72,7 +72,11 @@
 	
 	var cssClassnamesInStyleDefinitions = (0, _styleDefinitions.extractAllCssClassNames)(_styleDefinitions2.default);
 	
-	(0, _neosUiExtensibility2.default)('Sandstorm.BlockStyles', {}, function (globalRegistry) {
+	(0, _neosUiExtensibility2.default)('Sandstorm.BlockStyles', {}, function (globalRegistry, _ref) {
+		var frontendConfiguration = _ref.frontendConfiguration;
+	
+		var stylePresets = frontendConfiguration['Sandstorm.BlockStyles:presets'];
+	
 		var richtextToolbar = globalRegistry.get('ckEditor').get('richtextToolbar');
 		richtextToolbar.set('BlockStyles', {
 			component: _BlockStyles2.default,
@@ -259,13 +263,13 @@
 	
 	var _reactUiComponents = __webpack_require__(10);
 	
-	var _reactRedux = __webpack_require__(12);
+	var _reactRedux = __webpack_require__(11);
 	
-	var _neosUiReduxStore = __webpack_require__(13);
+	var _neosUiReduxStore = __webpack_require__(12);
 	
-	var _plowJs = __webpack_require__(14);
+	var _plowJs = __webpack_require__(13);
 	
-	var _styleDefinitions = __webpack_require__(11);
+	var _styleDefinitions = __webpack_require__(14);
 	
 	var _styleDefinitions2 = _interopRequireDefault(_styleDefinitions);
 	
@@ -382,9 +386,51 @@
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+	
+	var _readFromConsumerApi = __webpack_require__(6);
+	
+	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _readFromConsumerApi = __webpack_require__(6);
+	
+	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _readFromConsumerApi = __webpack_require__(6);
+	
+	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -394,35 +440,6 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	exports.default = [{
-		id: 'size',
-	
-		label: 'Size',
-		options: [{
-			label: 'Small',
-			value: 'size-small'
-		}, {
-			label: 'Medium',
-			value: 'size-medium'
-		}, {
-			label: 'Large',
-			value: 'size-large'
-		}]
-	}, {
-		id: 'padding',
-	
-		label: 'Padding',
-		options: [{
-			label: 'Small',
-			value: 'padding-small'
-		}, {
-			label: 'Medium',
-			value: 'padding-medium'
-		}, {
-			label: 'Large',
-			value: 'padding-large'
-		}]
-	}];
 	function extractAllCssClassNames(styleDefinitions) {
 		var cssClassNames = [];
 		styleDefinitions.forEach(function (styleDefinition) {
@@ -463,48 +480,6 @@
 	
 		return concat.apply(undefined, _toConsumableArray(classes));
 	}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _readFromConsumerApi = __webpack_require__(6);
-	
-	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _readFromConsumerApi = __webpack_require__(6);
-	
-	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _readFromConsumerApi = __webpack_require__(6);
-	
-	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
 
 /***/ })
 /******/ ]);

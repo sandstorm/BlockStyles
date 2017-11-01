@@ -2,6 +2,12 @@
   properties:
     text:
       ui:
-        aloha:
-          'format':
-            'Sandstorm.Blockstyles': true
+        inline:
+          editorOptions:
+            formatting:
+              a: true
+              b: true
+              h1: true
+              p: true
+              h2: true
+              'Sandstorm.Blockstyles': true
