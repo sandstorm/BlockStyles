@@ -3,6 +3,9 @@
 		"build": "neos-react-scripts build",
 		"watch": "neos-react-scripts watch"
 	},
+	"dependencies": {
+		"@neos-project/positional-array-sorter": "1.0.0-beta8"
+	},
 	"devDependencies": {
 		"@neos-project/neos-ui-extensibility": "*"
 	},

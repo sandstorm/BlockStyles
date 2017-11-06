@@ -62,15 +62,11 @@
 	
 	var _BlockStyles2 = _interopRequireDefault(_BlockStyles);
 	
-	var _styleDefinitions = __webpack_require__(14);
-	
-	var _styleDefinitions2 = _interopRequireDefault(_styleDefinitions);
+	var _styleDefinitions = __webpack_require__(16);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	var cssClassnamesInStyleDefinitions = (0, _styleDefinitions.extractAllCssClassNames)(_styleDefinitions2.default);
 	
 	(0, _neosUiExtensibility2.default)('Sandstorm.BlockStyles', {}, function (globalRegistry, _ref) {
 		var frontendConfiguration = _ref.frontendConfiguration;
@@ -91,13 +87,16 @@
 		/**
 	  * Shorthand add* method to ease creation of custom styles
 	  */
-		formattingRules.set('Sandstorm.Blockstyles', {
+		formattingRules.set('Sandstorm.BlockStyles', {
 			applyStyleFn: function applyStyleFn(formattingOptions, editor, CKEDITOR) {
-				var styleDefinitionId = formattingOptions.styleDefinitionId,
+				var blockStylePresetName = formattingOptions.blockStylePresetName,
+				    styleDefinitionId = formattingOptions.styleDefinitionId,
 				    value = formattingOptions.value;
 	
 	
-				var classesToBePreserved = (0, _styleDefinitions.findAllAppliedClassesExceptForOneStyleDefinition)(styleDefinitionId, _styleDefinitions2.default, editor, CKEDITOR);
+				var blockStylePreset = stylePresets[blockStylePresetName];
+	
+				var classesToBePreserved = (0, _styleDefinitions.findAllAppliedClassesExceptForOneStyleDefinition)(styleDefinitionId, blockStylePreset, editor, CKEDITOR);
 	
 				var style = new CKEDITOR.style({
 					element: 'p',
@@ -115,9 +114,18 @@
 				}
 				return null;
 			},
-			config: formattingRules.config.addToExtraAllowedContent(cssClassnamesInStyleDefinitions.map(function (cssClassName) {
-				return 'p(' + cssClassName + ')';
-			}).join(';'))
+			config: function config(configSoFar, formattingEditorOptions) {
+				var _ref2;
+	
+				var blockStylePresetName = formattingEditorOptions;
+				var blockStylePreset = stylePresets[blockStylePresetName];
+				var classNames = (_ref2 = []).concat.apply(_ref2, _toConsumableArray(Object.keys(blockStylePreset).map(function (k) {
+					return Object.keys(blockStylePreset[k].options);
+				})));
+				return formattingRules.config.addToExtraAllowedContent(classNames.map(function (cssClassName) {
+					return 'p(' + cssClassName + ')';
+				}).join(';'))(configSoFar);
+			}
 	
 		});
 	});
@@ -191,7 +199,7 @@
 /* 4 */
 /***/ (function(module, exports) {
 
-	module.exports = {"name":"@neos-project/neos-ui-extensibility","version":"1.0.0-beta4","description":"Extensibility mechanisms for the Neos CMS UI","main":"./src/index.js","scripts":{"prebuild":"check-dependencies && yarn clean","test":"yarn jest","test:watch":"yarn jest -- --watch","build":"exit 0","build:watch":"exit 0","clean":"rimraf ./lib ./dist","lint":"eslint src","jest":"PWD=$(pwd) NODE_ENV=test jest -w 1 --coverage"},"dependencies":{"@neos-project/build-essentials":"1.0.0-beta4","@neos-project/utils-helpers":"1.0.0-beta4","babel-core":"^6.13.2","babel-eslint":"^7.1.1","babel-loader":"^6.2.4","babel-plugin-transform-decorators-legacy":"^1.3.4","babel-plugin-transform-object-rest-spread":"^6.20.1","babel-plugin-webpack-alias":"^2.1.1","babel-preset-es2015":"^6.13.2","babel-preset-react":"^6.3.13","babel-preset-stage-0":"^6.3.13","chalk":"^1.1.3","css-loader":"^0.26.0","file-loader":"^0.10.0","json-loader":"^0.5.4","postcss-loader":"^1.0.0","react-dev-utils":"^0.5.0","style-loader":"^0.13.1"},"bin":{"neos-react-scripts":"./bin/neos-react-scripts.js"},"jest":{"transformIgnorePatterns":[],"setupFiles":["./node_modules/@neos-project/build-essentials/src/setup-browser-env.js"],"transform":{"neos-ui-extensibility/src/.+\\.jsx?$":"./node_modules/.bin/babel-jest","node_modules/@neos-project/.+\\.jsx?$":"./node_modules/.bin/babel-jest"}}}
+	module.exports = {"name":"@neos-project/neos-ui-extensibility","version":"1.0.0-beta8","description":"Extensibility mechanisms for the Neos CMS UI","main":"./src/index.js","scripts":{"prebuild":"check-dependencies && yarn clean","test":"yarn jest","test:watch":"yarn jest -- --watch","build":"exit 0","build:watch":"exit 0","clean":"rimraf ./lib ./dist","lint":"eslint src","jest":"PWD=$(pwd) NODE_ENV=test jest -w 1 --coverage"},"dependencies":{"@neos-project/build-essentials":"1.0.0-beta8","@neos-project/positional-array-sorter":"1.0.0-beta8","babel-core":"^6.13.2","babel-eslint":"^7.1.1","babel-loader":"^6.2.4","babel-plugin-transform-decorators-legacy":"^1.3.4","babel-plugin-transform-object-rest-spread":"^6.20.1","babel-plugin-webpack-alias":"^2.1.1","babel-preset-es2015":"^6.13.2","babel-preset-react":"^6.3.13","babel-preset-stage-0":"^6.3.13","chalk":"^1.1.3","css-loader":"^0.26.0","file-loader":"^0.10.0","json-loader":"^0.5.4","postcss-loader":"^1.0.0","react-dev-utils":"^0.5.0","style-loader":"^0.13.1"},"bin":{"neos-react-scripts":"./bin/neos-react-scripts.js"},"jest":{"transformIgnorePatterns":[],"setupFiles":["./node_modules/@neos-project/build-essentials/src/setup-browser-env.js","./node_modules/@neos-project/build-essentials/src/enzymeConfiguration.js"],"transform":{"neos-ui-extensibility/src/.+\\.jsx?$":"./node_modules/.bin/babel-jest","node_modules/@neos-project/.+\\.jsx?$":"./node_modules/.bin/babel-jest"}}}
 
 /***/ }),
 /* 5 */
@@ -247,9 +255,13 @@
 	});
 	exports.default = undefined;
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _dec, _class;
+	var _dec, _dec2, _class;
 	//import {getGuestFrameWindow} from '@neos-project/neos-ui-guest-frame/src/dom';
 	
 	
@@ -269,9 +281,7 @@
 	
 	var _plowJs = __webpack_require__(13);
 	
-	var _styleDefinitions = __webpack_require__(14);
-	
-	var _styleDefinitions2 = _interopRequireDefault(_styleDefinitions);
+	var _neosUiDecorators = __webpack_require__(14);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -286,8 +296,16 @@
 	};
 	
 	var BlockStyles = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
-		formattingUnderCursor: _neosUiReduxStore.selectors.UI.ContentCanvas.formattingUnderCursor
-	})), _dec(_class = function (_PureComponent) {
+		formattingUnderCursor: _neosUiReduxStore.selectors.UI.ContentCanvas.formattingUnderCursor,
+		focusedNodeType: _neosUiReduxStore.selectors.CR.Nodes.focusedNodeTypeSelector,
+		currentlyEditedPropertyName: _neosUiReduxStore.selectors.UI.ContentCanvas.currentlyEditedPropertyName
+	
+	})), _dec2 = (0, _neosUiDecorators.neos)(function (globalRegistry) {
+		return {
+			frontendConfiguration: globalRegistry.get('frontendConfiguration'),
+			nodeTypesRegistry: globalRegistry.get('@neos-project/neos-ui-contentrepository')
+		};
+	}), _dec(_class = _dec2(_class = function (_PureComponent) {
 		_inherits(BlockStyles, _PureComponent);
 	
 		function BlockStyles() {
@@ -301,28 +319,31 @@
 				args[_key] = arguments[_key];
 			}
 	
-			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BlockStyles.__proto__ || Object.getPrototypeOf(BlockStyles)).call.apply(_ref, [this].concat(args))), _this), _this.renderStyleDefinition = function (styleDefinition) {
-				console.log('this.props.formattingUnderCursor', _this.props.formattingUnderCursor);
-				var classesList = (0, _plowJs.$get)(['Sandstorm.Blockstyles', 'classes'], _this.props.formattingUnderCursor);
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BlockStyles.__proto__ || Object.getPrototypeOf(BlockStyles)).call.apply(_ref, [this].concat(args))), _this), _this.renderStyleDefinition = function (_ref2, blockStylePresetName) {
+				var _ref3 = _slicedToArray(_ref2, 2),
+				    styleDefinitionId = _ref3[0],
+				    styleDefinition = _ref3[1];
 	
-				var classesForOption = styleDefinition.options.map(function (it) {
-					return it.value;
-				});
+				var classesList = (0, _plowJs.$get)(['Sandstorm.BlockStyles', 'classes'], _this.props.formattingUnderCursor);
+	
+				var classesForOption = Object.keys(styleDefinition.options);
 				var enabledClass = classesList && classesList.find(function (it) {
 					return classesForOption.indexOf(it) !== -1;
 				});
-				console.log("ENABLED", classesList, classesForOption, enabledClass);
+				var options = Object.entries(styleDefinition.options).map(function (_ref4) {
+					var _ref5 = _slicedToArray(_ref4, 2),
+					    key = _ref5[0],
+					    option = _ref5[1];
 	
-				return _react2.default.createElement(
-					'span',
-					null,
-					styleDefinition.label,
-					': ',
-					_react2.default.createElement(_reactUiComponents.SelectBox, { options: styleDefinition.options, value: enabledClass, onValueChange: _this.handleValueChange(styleDefinition.id) })
-				);
-			}, _this.handleValueChange = function (styleDefinitionId) {
+					return _extends({
+						value: key
+					}, option);
+				});
+	
+				return _react2.default.createElement(_reactUiComponents.SelectBox, { key: styleDefinitionId, options: options, value: enabledClass, onValueChange: _this.handleValueChange(styleDefinitionId, blockStylePresetName) });
+			}, _this.handleValueChange = function (styleDefinitionId, blockStylePresetName) {
 				return function (value) {
-					getGuestFrameWindow().NeosCKEditorApi.toggleFormat("Sandstorm.Blockstyles", { styleDefinitionId: styleDefinitionId, value: value });
+					getGuestFrameWindow().NeosCKEditorApi.toggleFormat("Sandstorm.BlockStyles", { blockStylePresetName: blockStylePresetName, styleDefinitionId: styleDefinitionId, value: value });
 				};
 			}, _temp), _possibleConstructorReturn(_this, _ret);
 		}
@@ -330,16 +351,37 @@
 		_createClass(BlockStyles, [{
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+	
+				var _props = this.props,
+				    focusedNodeType = _props.focusedNodeType,
+				    currentlyEditedPropertyName = _props.currentlyEditedPropertyName,
+				    frontendConfiguration = _props.frontendConfiguration,
+				    nodeTypesRegistry = _props.nodeTypesRegistry;
+	
+				var inlineEditorOptions = nodeTypesRegistry.getInlineEditorOptionsForProperty(focusedNodeType, currentlyEditedPropertyName);
+	
+				var blockStylePresetName = (0, _plowJs.$get)(['formatting', 'Sandstorm.BlockStyles'], inlineEditorOptions);
+	
+				var stylePresets = frontendConfiguration.get('Sandstorm.BlockStyles:presets');
+	
+				var blockStylePreset = stylePresets[blockStylePresetName];
+				if (!blockStylePreset) {
+					return null;
+				}
+	
 				return _react2.default.createElement(
 					'div',
 					null,
-					_styleDefinitions2.default.map(this.renderStyleDefinition)
+					Object.entries(blockStylePreset).map(function (it) {
+						return _this2.renderStyleDefinition(it, blockStylePresetName);
+					})
 				);
 			}
 		}]);
 	
 		return BlockStyles;
-	}(_react.PureComponent)) || _class);
+	}(_react.PureComponent)) || _class) || _class);
 	exports.default = BlockStyles;
 
 /***/ }),
@@ -428,57 +470,50 @@
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _readFromConsumerApi = __webpack_require__(6);
+	
+	var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiDecorators;
+
+/***/ }),
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports) {
 
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
-	exports.extractAllCssClassNames = extractAllCssClassNames;
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
 	exports.findAllAppliedClassesExceptForOneStyleDefinition = findAllAppliedClassesExceptForOneStyleDefinition;
+	function findAllAppliedClassesExceptForOneStyleDefinition(styleDefinitionId, blockStylePreset, editor, CKEDITOR) {
+	    var elementPath = editor.elementPath();
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	    var classNames = Object.entries(blockStylePreset).map(function (_ref) {
+	        var _ref2 = _slicedToArray(_ref, 2),
+	            key = _ref2[0],
+	            value = _ref2[1];
 	
-	function extractAllCssClassNames(styleDefinitions) {
-		var cssClassNames = [];
-		styleDefinitions.forEach(function (styleDefinition) {
-			return styleDefinition.options.forEach(function (option) {
-				return cssClassNames.push(option.value);
-			});
-		});
+	        if (key === styleDefinitionId) {
+	            return null;
+	        }
 	
-		return cssClassNames;
-	}
+	        return Object.keys(value.options).find(function (className) {
+	            return elementPath.block.hasClass(className);
+	        });
+	    }).filter(Boolean);
 	
-	function concat() {
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-	
-		return args.reduce(function (acc, val) {
-			return [].concat(_toConsumableArray(acc), _toConsumableArray(val));
-		}, []);
-	}
-	
-	function findAllAppliedClassesExceptForOneStyleDefinition(styleDefinitionId, styleDefinitions, editor, CKEDITOR) {
-		var classes = styleDefinitions.map(function (styleDefinition) {
-			if (styleDefinition.id === styleDefinitionId) {
-				return [];
-			} else {
-				var elementPath = editor.elementPath();
-	
-				return styleDefinition.options.map(function (option) {
-					if (elementPath.block.hasClass(option.value)) {
-						return option.value;
-					} else {
-						return null;
-					}
-				}).filter(Boolean); // remove empty values
-			}
-		});
-	
-		return concat.apply(undefined, _toConsumableArray(classes));
+	    return classNames;
 	}
 
 /***/ })

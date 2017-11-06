@@ -1,9 +1,7 @@
 import manifest from '@neos-project/neos-ui-extensibility';
 
 import BlockStyles from './BlockStyles.js';
-import styleDefinitions, {extractAllCssClassNames, findAllAppliedClassesExceptForOneStyleDefinition} from './styleDefinitions';
-
-const cssClassnamesInStyleDefinitions = extractAllCssClassNames(styleDefinitions);
+import {findAllAppliedClassesExceptForOneStyleDefinition} from './styleDefinitions';
 
 manifest('Sandstorm.BlockStyles', {}, (globalRegistry, {frontendConfiguration}) => {
 	const stylePresets = frontendConfiguration['Sandstorm.BlockStyles:presets'];
@@ -20,11 +18,13 @@ manifest('Sandstorm.BlockStyles', {}, (globalRegistry, {frontendConfiguration}) 
 	/**
 	 * Shorthand add* method to ease creation of custom styles
 	 */
-	formattingRules.set('Sandstorm.Blockstyles', {
+	formattingRules.set('Sandstorm.BlockStyles', {
 		applyStyleFn: (formattingOptions, editor, CKEDITOR) => {
-			const {styleDefinitionId, value} = formattingOptions;
+			const {blockStylePresetName, styleDefinitionId, value} = formattingOptions;
 
-			const classesToBePreserved = findAllAppliedClassesExceptForOneStyleDefinition(styleDefinitionId, styleDefinitions, editor, CKEDITOR);
+            const blockStylePreset = stylePresets[blockStylePresetName];
+
+			const classesToBePreserved = findAllAppliedClassesExceptForOneStyleDefinition(styleDefinitionId, blockStylePreset, editor, CKEDITOR);
 
 			var style = new CKEDITOR.style({
 				element: 'p',
@@ -42,7 +42,12 @@ manifest('Sandstorm.BlockStyles', {}, (globalRegistry, {frontendConfiguration}) 
 			}
 			return null;
 		},
-		config: formattingRules.config.addToExtraAllowedContent(cssClassnamesInStyleDefinitions.map(cssClassName => `p(${cssClassName})`).join(';')),
+		config: (configSoFar, formattingEditorOptions) => {
+		    const blockStylePresetName = formattingEditorOptions;
+		    const blockStylePreset = stylePresets[blockStylePresetName];
+		    const classNames = [].concat(...Object.keys(blockStylePreset).map(k => Object.keys(blockStylePreset[k].options)));
+		    return formattingRules.config.addToExtraAllowedContent(classNames.map(cssClassName => `p(${cssClassName})`).join(';'))(configSoFar);
+        }
 
 	});
 });

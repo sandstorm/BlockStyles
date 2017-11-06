@@ -10,4 +10,4 @@
               h1: true
               p: true
               h2: true
-              'Sandstorm.Blockstyles': true
+              'Sandstorm.BlockStyles': 'full'

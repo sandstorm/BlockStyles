@@ -18,17 +18,17 @@ Sandstorm:
           label: 'Size'
           options:
             'size-small':
-              label: 'Small'
+              label: 'Size Small'
             'size-medium':
-              label: 'Medium'
+              label: 'Size Medium'
             'size-large':
-              label: 'Large'
+              label: 'Size Large'
         padding:
           label: 'Padding'
           options:
             'padding-small':
-              label: 'Small'
+              label: 'Padding Small'
             'padding-medium':
-              label: 'Medium'
+              label: 'Padding Medium'
             'padding-large':
-              label: 'Large'
+              label: 'Padding Large'
